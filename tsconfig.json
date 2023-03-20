@@ -14,18 +14,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@/api/*": ["./api/*"],
+      "@/app/*": ["./app/*"],
+      "@/assets/*": ["./assets/*"],
+      "@/components/*": ["./components/*"],
+      "@/constants/*": ["./constants/*"],
+      "@/features/*": ["./features/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/pages/*": ["./pages/*"],
+      "@/utils/*": ["./utils/*"],
+      "@/models/*": ["./models/*"],
+    }
   },
   "include": ["vite.config.ts", ".eslintrc.cjs", "src"],
   "references": [{ "path": "./tsconfig.node.json" }],
-  "baseUrl": ".",
-  "paths": {
-    "@/styles/*": ["./styles/*"],
-    "@/components/*": ["./components/*"],
-    "@/models/*": ["./models/*"],
-    "@/api/*": ["./api-client/*"],
-    "@/hooks/*": ["./hooks/*"],
-    "@/utils/*": ["./utils/*"],
-    "@/pages/*": ["./pages/*"]
-  }
 }

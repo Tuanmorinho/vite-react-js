@@ -25,5 +25,7 @@ module.exports = {
         'react/react-in-jsx-scope': 0,
         'import/export': 0,
         'prettier/prettier': 0,
+        'import/extensions': ['never'],
+        "no-param-reassign": 0
     },
 };
