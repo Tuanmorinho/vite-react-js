@@ -4,12 +4,14 @@ import rootSaga from './rootSaga';
 
 import listCustomerReducer from '@/features/customer/listCustomerSlice';
 import authReducer from '@/features/auth/authSlice';
+import layoutBreakpointSlice from '@/features/layoutBreakpoint/layoutBreakpointSlice';
 
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
+    layoutBreakPoint: layoutBreakpointSlice,
     auth: authReducer,
     listCutomer: listCustomerReducer
   },

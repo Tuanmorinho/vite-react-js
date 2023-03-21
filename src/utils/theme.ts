@@ -50,16 +50,16 @@ export const theme = createTheme({
     },
     MuiLink: {
       defaultProps: {
-        underline: 'none'
+        underline: 'none',
       },
       styleOverrides: {
         root: {
-          color: 'white',
           cursor: 'pointer',
-          background: 'transparent',
-          // '&:hover': {
-          //   background: '#c2af94'
-          // },
+          textDecoration: 'none',
+          '&:hover': {
+            color: '#13696e',
+            textDecoration: 'underline'
+          },
 
           // '&.active': {
           //   background: '#ac9c84'
@@ -71,6 +71,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none'
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+
         }
       }
     }

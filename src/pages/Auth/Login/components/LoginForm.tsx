@@ -1,8 +1,34 @@
 import { InputField } from "@/components/FormFields";
 import { ILoginPayload } from "@/models/auth";
-import { Person } from "@mui/icons-material";
-import { Box, Button } from "@mui/material";
+import { Person, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Box, Button, IconButton, InputAdornment, Link, Stack } from "@mui/material";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link as RouterLink } from "react-router-dom";
+
+function SuffixPasswordToggle() {
+
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        event.preventDefault();
+    };
+
+    return (
+        <InputAdornment position="end">
+            <IconButton
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+            >
+            {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+        </InputAdornment>
+    )
+}
 
 export interface ILoginFormProps {
     initialValues?: ILoginPayload;
@@ -29,11 +55,24 @@ export default function LoginForm(props: ILoginFormProps) {
     return (
         <Box>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <InputField name={'username'} control={control} label={'Tên đăng nhập'} />
-                <InputField name={'password'} control={control} label={'Mật khẩu'} type={'password'} />
+                <Stack direction={'column'}>
+                    <InputField name={'username'} control={control} label={'Tên đăng nhập'} />
+                    <InputField name={'password'} control={control} label={'Mật khẩu'} type={'password'} suffixComp={<SuffixPasswordToggle />} />
+                </Stack>
 
                 <Box mt={3}>
-                    <Button type={'submit'} variant={'contained'} size={'medium'} startIcon={<Person />}>Đăng nhập</Button>
+                    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+                        <Button type={'submit'} variant={'contained'} size={'medium'} startIcon={<Person />}>Đăng nhập</Button>
+                        <Box>
+                            Quên&ensp;
+                            <Link component={RouterLink} to={'/'}>
+                                Tên đăng nhập
+                            </Link>&ensp;|&ensp;
+                            <Link component={RouterLink} to={'/'}>
+                                Mật khẩu
+                            </Link>
+                        </Box>
+                    </Stack>
                 </Box>
             </form>
         </Box>
