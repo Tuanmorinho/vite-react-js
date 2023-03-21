@@ -1,4 +1,4 @@
-import { IEnhancedTableToolbarProps } from "@/models/table";
+import { IEnhancedTableToolbarProps } from "@/models/table/table";
 
 export default function EnhancedTableToolbar(props: IEnhancedTableToolbarProps) {
     const { numSelected } = props;

@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
@@ -6,19 +7,24 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#D8C3A5',
-      light: '#EAE7DC'
+      main: '#1C969E',
+      light: '#A2E2E7'
     },
     secondary: {
-      main: '#8E8D8A',
+      main: '#EFF7F8'
     },
-    error: {
-      main: red.A400,
-      light: '#E98074'
-    },
+    // error: {
+    //   main: red.A400,
+    //   light: '#E98074'
+    // },
   },
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: `"Manrope", "Helvetica", "Arial", sans-serif`,
+    // body1: {
+    //     color: '#052225',
+    //     fontWeight: 700,
+    //     fontSize: '30px'
+    // }
   },
   components: {
     MuiContainer: {
@@ -58,6 +64,13 @@ export const theme = createTheme({
           // '&.active': {
           //   background: '#ac9c84'
           // }
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none'
         }
       }
     }

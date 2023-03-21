@@ -1,4 +1,3 @@
-import { useAppSelector } from "@/app/hooks";
 import { IEnhancedTable, TOrder } from "@/models/table";
 import { Box, Paper, Stack, Table, TableContainer } from "@mui/material";
 import { useState } from "react";
@@ -8,10 +7,6 @@ import EnhancedTableToolbar from "./EnhancedTableToolbar";
 export default function EnhancedTable(props: IEnhancedTable) {
 
     const { headCells } = props;
-
-    const data = useAppSelector(state => state.counter.value);
-    const dataType = typeof data;
-    console.log(dataType)
 
     const [order, setOrder] = useState<TOrder>('asc');
     const [orderBy, setOrderBy] = useState<string>('');

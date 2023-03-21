@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store';
-import { ICustomer } from '@/models/customer';
+import { ICustomer } from '@/models/features/customer';
 
 export interface ICustomerState {
     data?: ICustomer[];
@@ -36,6 +36,7 @@ export const listCustomerSlice = createSlice({
 });
 
 export const { getCustomer, getCustomerSuccess, getCustomerFailed } = listCustomerSlice.actions;
+
 export const selectListCustomer = (state: RootState) => state.listCutomer;
 
 export default listCustomerSlice.reducer;

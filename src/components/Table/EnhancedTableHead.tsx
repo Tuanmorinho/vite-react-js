@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IEnhancedTableProps } from "@/models/table";
+import { IEnhancedTableProps } from "@/models/table/table";
 
 export default function EnhancedTableHead(props: IEnhancedTableProps) {
     const { onSelectedAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;

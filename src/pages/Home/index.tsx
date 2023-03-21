@@ -1,6 +1,6 @@
 import customerApi from "@/api/customerApi";
 import EnhancedTable from "@/components/Table/EnhancedTable";
-import { IHeadCell } from "@/models/table";
+import { IHeadCell } from "@/models/table/table";
 import { useEffect } from "react";
 
 const headCells: IHeadCell[] = [

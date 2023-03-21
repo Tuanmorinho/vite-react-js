@@ -1,14 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import listCustomerReducer from '@/features/customer/listCustomerSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
+
+import listCustomerReducer from '@/features/customer/listCustomerSlice';
+import authReducer from '@/features/auth/authSlice';
+
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    auth: authReducer,
     listCutomer: listCustomerReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
