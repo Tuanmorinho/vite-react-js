@@ -2,15 +2,20 @@ import { InputField } from "@/components/FormFields";
 import { ILoginPayload } from "@/models/auth";
 import { Person, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Box, Button, IconButton, InputAdornment, Link, Stack } from "@mui/material";
-import { useState } from "react";
+import { PasswordToggleContext } from "contexts";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link as RouterLink } from "react-router-dom";
 
 function SuffixPasswordToggle() {
 
+    const { toggleType } = useContext(PasswordToggleContext);
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleClickShowPassword = () => { 
+        setShowPassword((show) => !show);
+        if(toggleType) toggleType();
+    }
 
     const handleMouseDownPassword = (
         event: React.MouseEvent<HTMLButtonElement>
@@ -38,6 +43,7 @@ export interface ILoginFormProps {
 export default function LoginForm(props: ILoginFormProps) {
     
     const { initialValues, onSubmit } = props;
+    const { type } = useContext(PasswordToggleContext);
 
     const { 
         control,
@@ -57,7 +63,7 @@ export default function LoginForm(props: ILoginFormProps) {
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <Stack direction={'column'}>
                     <InputField name={'username'} control={control} label={'Tên đăng nhập'} />
-                    <InputField name={'password'} control={control} label={'Mật khẩu'} type={'password'} suffixComp={<SuffixPasswordToggle />} />
+                    <InputField name={'password'} control={control} label={'Mật khẩu'} type={type} suffixComp={<SuffixPasswordToggle />} />
                 </Stack>
 
                 <Box mt={3}>

@@ -5,6 +5,7 @@ import LoginForm from "./components/LoginForm";
 import { useAppSelector } from "@/redux/hooks";
 import { selectIsMobile } from "@/features/layoutBreakpoint/layoutBreakpointSlice";
 import MainLogo from '@/components/Logo/MainLogo';
+import { PasswordToggleProvider } from "contexts";
 
 export default function LoginPage() {
 
@@ -36,7 +37,9 @@ export default function LoginPage() {
                                     </Typography>
                                 </Box>
                                 <Box mt={3} width={'430px'}>
-                                    <LoginForm initialValues={initialValues} onSubmit={handleLoginFormSubmit} />
+                                    <PasswordToggleProvider>
+                                        <LoginForm initialValues={initialValues} onSubmit={handleLoginFormSubmit} />
+                                    </PasswordToggleProvider>
                                 </Box>
                             </Stack>
                         </Box>
