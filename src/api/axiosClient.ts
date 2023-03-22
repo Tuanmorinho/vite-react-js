@@ -1,17 +1,20 @@
+import { ACCESS_TOKEN } from '@/constants/index';
 import axios, { AxiosResponse } from "axios";
 
 export const axiosClient = axios.create({
-    baseURL: 'http://js-post-api.herokuapp.com/api',
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
         'Content-Type': 'application/json; charset=utf-8'
     }
 })
 
 axiosClient.interceptors.request.use(function (config) {
-    // Do something before request is sent
+    const userToken = localStorage.getItem(ACCESS_TOKEN)
+    if (userToken) {
+        config.headers.Authorization = `Bearer ${userToken}`;
+    }
     return config;
 }, function (error) {
-    // Do something with request error
     return Promise.reject(error);
 });
 

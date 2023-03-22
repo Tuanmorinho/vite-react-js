@@ -1,7 +1,6 @@
 import { IEnhancedTable, TOrder } from "@/models/table";
 import { Box, Paper, Stack, Table, TableContainer } from "@mui/material";
 import { useState } from "react";
-import EnhancedTableHead from "./EnhancedTableHead";
 import EnhancedTableToolbar from "./EnhancedTableToolbar";
 
 export default function EnhancedTable(props: IEnhancedTable) {

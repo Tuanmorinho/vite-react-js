@@ -1,23 +1,25 @@
-import { Box, Stack, Paper, Typography } from "@mui/material";
 import loginImg from '@/assets/images/apps/login/login-img.png';
-import { ILoginPayload } from "@/models/auth";
-import LoginForm from "./components/LoginForm";
-import { useAppSelector } from "@/redux/hooks";
-import { selectIsMobile } from "@/features/layoutBreakpoint/layoutBreakpointSlice";
 import MainLogo from '@/components/Logo/MainLogo';
+import { authAction } from '@/features/auth/authSlice';
+import { selectIsMobile } from "@/features/layoutBreakpoint/layoutBreakpointSlice";
+import { ILoginPayload } from "@/models/auth";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { Box, Paper, Stack, Typography } from "@mui/material";
 import { PasswordToggleProvider } from "contexts";
+import LoginForm from "./components/LoginForm";
 
 export default function LoginPage() {
 
+    const dispatch = useAppDispatch();
     const isMobile = useAppSelector(selectIsMobile);
 
     const initialValues: ILoginPayload = {
-        username: 'tuan',
-        password: 'Tuandeptrai123#@'
+        username: '',
+        password: ''
     }
 
-    const handleLoginFormSubmit = (formValues: ILoginPayload) => {
-
+    const handleLogin = (formValues: ILoginPayload) => {
+        dispatch(authAction.login(formValues));
     }
 
     return (
@@ -38,7 +40,7 @@ export default function LoginPage() {
                                 </Box>
                                 <Box mt={3} width={'430px'}>
                                     <PasswordToggleProvider>
-                                        <LoginForm initialValues={initialValues} onSubmit={handleLoginFormSubmit} />
+                                        <LoginForm initialValues={initialValues} onSubmit={handleLogin} />
                                     </PasswordToggleProvider>
                                 </Box>
                             </Stack>

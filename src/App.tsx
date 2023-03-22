@@ -1,27 +1,27 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import { store } from '@/redux/store';
-import { CssBaseline, useMediaQuery, useTheme } from '@mui/material';
-import { ThemeProvider } from '@emotion/react';
 import { theme } from '@/utils/index';
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline, useMediaQuery, useTheme } from '@mui/material';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import EmptyLayout from '@/layouts/EmptyLayout';
 import AdminLayout from '@/layouts/AdminLayout';
-import HomePage from '@/pages/Home';
-import LoginPage from '@/pages/Auth/Login';
+import EmptyLayout from '@/layouts/EmptyLayout';
 import NotFoundPage from '@/pages/404';
-import { useAppDispatch } from './redux/hooks';
-import { useMemo } from 'react';
+import LoginPage from '@/pages/Auth/Login';
+import HomePage from '@/pages/Home';
+import { useEffect } from 'react';
 import { setIsMobile } from './features/layoutBreakpoint/layoutBreakpointSlice';
+import { useAppDispatch } from './redux/hooks';
 
 export function App() {
 
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    const isMobile: boolean = useMediaQuery(theme.breakpoints.down("md"));
 
-    useMemo(() => {
+    useEffect(() => {
         dispatch(setIsMobile(isMobile))
     }, [isMobile])
 

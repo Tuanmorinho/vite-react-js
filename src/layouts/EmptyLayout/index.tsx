@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
-
 import backgroundImg from '@/assets/images/pages/main-bg-img.png';
 
 export default function EmptyLayout() {

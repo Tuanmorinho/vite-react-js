@@ -3,6 +3,13 @@ export interface ILoginPayload {
     password: string;
 }
 
+export interface ILoginResponse {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    refresh_expires_in: number;
+}
+
 export interface IAuthUser {
     accessToken: string;
     email: string;

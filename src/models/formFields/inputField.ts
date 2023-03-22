@@ -7,4 +7,5 @@ export interface IInputFieldProps extends InputHTMLAttributes<HTMLInputElement> 
     label?: string;
     prefixComp?: ReactNode;
     suffixComp?: ReactNode;
+    needHelperText: boolean;
 }

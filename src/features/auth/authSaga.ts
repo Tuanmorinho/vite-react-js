@@ -1,18 +1,42 @@
-import { ILoginPayload } from '../../models/auth/auth';
-import { fork, take } from "redux-saga/effects";
-import { authAction } from "./authSlice";
+import authApi from '@/api/authApi';
+import { ACCESS_TOKEN } from '@/constants/index';
+import { IAuthUser, ILoginPayload, ILoginResponse } from '@/models/auth/auth';
 import { PayloadAction } from '@reduxjs/toolkit';
+import jwtDecode from 'jwt-decode';
+import { call, fork, put, take } from "redux-saga/effects";
+import { authAction } from "./authSlice";
 
-function* handleLogin(payload: ILoginPayload) {}
+function* handleLogin(payload: ILoginPayload) {
+    try {
+        const resposne: ILoginResponse = yield call(authApi.signIn, payload);
+        localStorage.setItem(ACCESS_TOKEN, resposne.access_token);
 
-function* handleLogout() {}
+        const decoded: Partial<IAuthUser> = jwtDecode(resposne.access_token);
 
-function* watchLoginFlow() {
-    const actionLogin: PayloadAction<ILoginPayload> = yield take(authAction.login.type);
-    yield fork(handleLogin, actionLogin.payload);
+        yield put(authAction.loginSuccess(decoded))
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+function* handleLogout() {
+    localStorage.removeItem(ACCESS_TOKEN);
+}
+
+function* watchAuthFlow() {
+    while (true) {
+        const isLoggedIn = Boolean(localStorage.getItem(ACCESS_TOKEN));
+
+        if (!isLoggedIn) {
+            const actionLogin: PayloadAction<ILoginPayload> = yield take(authAction.login.type);
+            yield fork(handleLogin, actionLogin.payload);
+        }
+
+        yield take(authAction.logout.type);
+        yield call(handleLogout);
+    }
 }
 
 export default function* authSaga() {
-    yield fork(watchLoginFlow);
-
+    yield fork(watchAuthFlow);
 }

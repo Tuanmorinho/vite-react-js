@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { render, screen } from '@testing-library/react';
-import { describe, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
-
+import { describe, it } from 'vitest';
 import { App, WrrapedApp } from './App';
 
 describe('App', () => {

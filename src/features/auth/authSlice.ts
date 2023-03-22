@@ -5,7 +5,7 @@ import { IAuthUser, ILoginPayload } from '@/models/auth/auth';
 export interface IAuthState {
     isLoggedIn: boolean;
     logging?: boolean;
-    currentUser?: IAuthUser;
+    currentUser?: Partial<IAuthUser>;
 }
 
 const initialState: IAuthState = {
@@ -23,7 +23,7 @@ export const authSlice = createSlice({
             state.logging = true;
         },
 
-        loginSuccess(state, action: PayloadAction<IAuthUser>) {
+        loginSuccess(state, action: PayloadAction<Partial<IAuthUser>>) {
             state.isLoggedIn = true;
             state.logging = false;
             state.currentUser = action.payload;

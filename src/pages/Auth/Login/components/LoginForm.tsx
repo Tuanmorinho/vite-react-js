@@ -1,39 +1,14 @@
 import { InputField } from "@/components/FormFields";
 import { ILoginPayload } from "@/models/auth";
-import { Person, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Box, Button, IconButton, InputAdornment, Link, Stack } from "@mui/material";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Person } from "@mui/icons-material";
+import { Box, Button, CircularProgress, Link, Stack } from "@mui/material";
 import { PasswordToggleContext } from "contexts";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link as RouterLink } from "react-router-dom";
-
-function SuffixPasswordToggle() {
-
-    const { toggleType } = useContext(PasswordToggleContext);
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-
-    const handleClickShowPassword = () => { 
-        setShowPassword((show) => !show);
-        if(toggleType) toggleType();
-    }
-
-    const handleMouseDownPassword = (
-        event: React.MouseEvent<HTMLButtonElement>
-    ) => {
-        event.preventDefault();
-    };
-
-    return (
-        <InputAdornment position="end">
-            <IconButton
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-            >
-            {showPassword ? <VisibilityOff /> : <Visibility />}
-            </IconButton>
-        </InputAdornment>
-    )
-}
+import * as yup from 'yup';
+import SuffixPasswordToggle from "./SuffixPasswordToggle";
 
 export interface ILoginFormProps {
     initialValues?: ILoginPayload;
@@ -45,31 +20,51 @@ export default function LoginForm(props: ILoginFormProps) {
     const { initialValues, onSubmit } = props;
     const { type } = useContext(PasswordToggleContext);
 
+    const loginSchema = yup.object().shape({
+        username: yup
+            .string()
+            .required('Vui vòng nhập tên đăng nhập'),
+        password: yup
+            .string()
+            .required('Vui vòng nhập mật khẩu')
+            // .matches(
+            //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            //     '<div>Mật khẩu phải chứa ít nhất<br />&#x2022;8 ký tự<br />&#x2022;1 chữ hoa<br />&#x2022;1 chữ thường<br />&#x2022;1 số<br />&#x2022;1 ký tự đặc biệt</div>'
+            // )
+    });
+
+    type TFormData = yup.InferType<typeof loginSchema>
+
     const { 
         control,
-        handleSubmit
-    } = useForm<ILoginPayload>({
+        handleSubmit,
+        formState: { isSubmitting, isValid }
+    } = useForm<TFormData>({
         defaultValues: initialValues,
         // resolver for validation
-        // resolver: 
+        resolver: yupResolver(loginSchema)
     })
 
-    const handleFormSubmit = (formValues: ILoginPayload) => {
-        console.log(formValues);
+    const handleFormSubmit = async (formValues: TFormData) => {
+        try {
+            await onSubmit?.(formValues);
+        } catch (error) {
+            console.log('Đăng nhập thất bại', error)
+        }
     }
 
     return (
         <Box>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <Stack direction={'column'}>
-                    <InputField name={'username'} control={control} label={'Tên đăng nhập'} />
-                    <InputField name={'password'} control={control} label={'Mật khẩu'} type={type} suffixComp={<SuffixPasswordToggle />} />
+                    <InputField name={'username'} control={control} label={'Tên đăng nhập'} needHelperText={false} />
+                    <InputField name={'password'} control={control} label={'Mật khẩu'} type={type} suffixComp={<SuffixPasswordToggle />} needHelperText={false} />
                 </Stack>
 
                 <Box mt={3}>
                     <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-                        <Button type={'submit'} variant={'contained'} size={'medium'} startIcon={<Person />}>Đăng nhập</Button>
-                        <Box>
+                        <Button type={'submit'} variant={'contained'} size={'medium'} startIcon={ isSubmitting ? <CircularProgress size={16} /> : <Person /> } disabled={isSubmitting || !isValid}>Đăng nhập</Button>
+                        <Box sx={{ fontSize: '0.875rem' }}>
                             Quên&ensp;
                             <Link component={RouterLink} to={'/'}>
                                 Tên đăng nhập

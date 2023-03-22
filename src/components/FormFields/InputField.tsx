@@ -1,10 +1,11 @@
 import { IInputFieldProps } from "@/models/formFields";
-import { FormControl, FormHelperText, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { FormControl, FormHelperText, InputLabel, OutlinedInput } from "@mui/material";
+import { createElement } from "react";
 import { useController } from "react-hook-form";
 
 export function InputField(props: IInputFieldProps) {
 
-    const { name, control, label, suffixComp, prefixComp, ...inputProps } = props;
+    const { name, control, label, suffixComp, prefixComp, needHelperText, ...inputProps } = props;
     // input props like disable, readonly,....
 
     const {
@@ -30,7 +31,9 @@ export function InputField(props: IInputFieldProps) {
                 endAdornment={suffixComp}
                 fullWidth
             />
-            <FormHelperText>{error?.message}</FormHelperText>
+            {
+                needHelperText && <FormHelperText>{ error?.message }</FormHelperText>
+            }
         </FormControl>
     )
 }
