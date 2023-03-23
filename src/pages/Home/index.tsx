@@ -1,6 +1,8 @@
 import customerApi from "@/api/customerApi";
 import EnhancedTable from "@/components/Table/EnhancedTable";
+import { authAction } from "@/features/auth/authSlice";
 import { IHeadCell } from "@/models/table/table";
+import { Button } from "@mui/material";
 import { useEffect } from "react";
 
 const headCells: IHeadCell[] = [
@@ -17,15 +19,17 @@ const headCells: IHeadCell[] = [
 ]
 
 export default function HomePage() {
-    useEffect(() => {
-        customerApi.getAll().then((res) => console.log(res))
-    }, []);
+
+    // useEffect(() => {
+    //     customerApi.getAll().then((res) => console.log(res))
+    // }, []);
 
     return (
         <div>
             <h1>Home Page</h1>
-
-            <EnhancedTable headCells={headCells} />
+            {/* <Button onClick={handleLogout}>Logout</Button>
+            <div>{JSON.stringify(user)}</div>
+            <EnhancedTable headCells={headCells} /> */}
         </div>
     );
 };

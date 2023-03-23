@@ -3,7 +3,8 @@ import { ACCESS_TOKEN } from '@/constants/index';
 import { IAuthUser, ILoginPayload, ILoginResponse } from '@/models/auth/auth';
 import { PayloadAction } from '@reduxjs/toolkit';
 import jwtDecode from 'jwt-decode';
-import { call, fork, put, take } from "redux-saga/effects";
+import { push } from 'redux-first-history';
+import { call, delay, fork, put, take } from "redux-saga/effects";
 import { authAction } from "./authSlice";
 
 function* handleLogin(payload: ILoginPayload) {
@@ -13,14 +14,17 @@ function* handleLogin(payload: ILoginPayload) {
 
         const decoded: Partial<IAuthUser> = jwtDecode(resposne.access_token);
 
-        yield put(authAction.loginSuccess(decoded))
+        yield put(authAction.loginSuccess(decoded));
+        yield put(push('/crm/home'));
     } catch (error) {
         console.log(error)
     }
 }
 
 function* handleLogout() {
+    yield delay(500);
     localStorage.removeItem(ACCESS_TOKEN);
+    yield put(push('/login'));
 }
 
 function* watchAuthFlow() {

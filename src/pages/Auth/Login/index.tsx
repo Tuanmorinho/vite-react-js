@@ -1,5 +1,5 @@
 import loginImg from '@/assets/images/apps/login/login-img.png';
-import MainLogo from '@/components/Logo/MainLogo';
+import { MainLogo } from '@/components/Logo/MainLogo';
 import { authAction } from '@/features/auth/authSlice';
 import { selectIsMobile } from "@/features/layoutBreakpoint/layoutBreakpointSlice";
 import { ILoginPayload } from "@/models/auth";

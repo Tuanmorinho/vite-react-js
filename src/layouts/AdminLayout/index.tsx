@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { IlayoutProps } from "@/models/common";
 
-export default function AdminLayout() {
+export default function AdminLayout(props: IlayoutProps) {
+
     return (
         <div>
             This is AdminLayout
-            <Outlet />
+            {props.children}
         </div>
     );
 };
